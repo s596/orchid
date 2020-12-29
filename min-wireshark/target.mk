@@ -25,7 +25,10 @@ wireshark += $(wildcard $(pwd/wireshark)/epan/ftypes/*.c)
 wireshark += $(wildcard $(pwd/wireshark)/epan/wmem/*.c)
 
 wireshark += $(wildcard $(pwd/wireshark)/wiretap/*.c)
-wireshark += $(wildcard $(pwd/wireshark)/wsutil/*.c)
+
+wireshark += $(filter-out \
+    %/strptime.c \
+,$(wildcard $(pwd/wireshark)/wsutil/*.c))
 
 wireshark += $(pwd/wireshark)/cfile.c
 wireshark += $(pwd/wireshark)/frame_tvbuff.c
@@ -67,6 +70,7 @@ cflags/$(pwd/wireshark)/ += -DHAVE_ARPA_INET_H
 cflags/$(pwd/wireshark)/ += -DHAVE_GRP_H
 cflags/$(pwd/wireshark)/ += -DHAVE_MKSTEMPS
 cflags/$(pwd/wireshark)/ += -DHAVE_PWD_H
+cflags/$(pwd/wireshark)/ += -DHAVE_STRPTIME
 
 cflags/$(pwd/wireshark)/epan/addr_resolv.c += -include netdb.h
 endif
